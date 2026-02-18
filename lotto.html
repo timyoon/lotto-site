@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>로또 번호 5세트 추천기</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 80px;
+      background: #f4f4f4;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #333;
+      color: white;
+    }
+
+    .set {
+      margin: 25px auto;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #ccc; /* ⭐ 줄 구분선 */
+      width: 500px;
+    }
+
+    .set-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .ball {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 55px;
+      height: 55px;
+      margin: 6px;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎱 로또 번호 5세트 추천기</h1>
+  <button onclick="generateLotto()">번호 뽑기</button>
+  <div id="numbers"></div>
+
+  <script>
+    function getColor(num) {
+      if (num <= 10) return "#fbc400";
+      if (num <= 20) return "#69c8f2";
+      if (num <= 30) return "#ff7272";
+      if (num <= 40) return "#aaa";
+      return "#7bc043";
+    }
+
+    function createOneSet() {
+      let numbers = [];
+
+      while (numbers.length < 6) {
+        let random = Math.floor(Math.random() * 45) + 1;
+        if (!numbers.includes(random)) {
+          numbers.push(random);
+        }
+      }
+
+      return numbers.sort((a, b) => a - b);
+    }
+
+    function generateLotto() {
+      const resultDiv = document.getElementById("numbers");
+      resultDiv.innerHTML = "";
+
+      for (let i = 1; i <= 5; i++) {  // ⭐ 1~5 표시
+        const setDiv = document.createElement("div");
+        setDiv.className = "set";
+
+        const title = document.createElement("div");
+        title.className = "set-title";
+        title.textContent = i + "번 세트";
+        setDiv.appendChild(title);
+
+        const oneSet = createOneSet();
+
+        oneSet.forEach(num => {
+          const ball = document.createElement("div");
+          ball.className = "ball";
+          ball.textContent = num;
+          ball.style.backgroundColor = getColor(num);
+          setDiv.appendChild(ball);
+        });
+
+        resultDiv.appendChild(setDiv);
+      }
+    }
+  </script>
+
+</body>
+</html>
